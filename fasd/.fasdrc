@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+# Path to the fasd data file, default "$HOME/.fasd".
+_FASD_DATA=$XDG_DATA_HOME/fasd/.fasd
+
+# Fasd defaults to track your "$PWD". Set this to 0 to disable this behavior.
+_FASD_TRACK_PWD=0
