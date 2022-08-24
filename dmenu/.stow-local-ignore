@@ -1,3 +1,5 @@
 \.git
+Taskfile.yml
+Taskfile.yaml
 _.*
 

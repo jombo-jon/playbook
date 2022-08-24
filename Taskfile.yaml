@@ -1,0 +1,22 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+  
+  make:
+    cmds:
+      - |
+        sudo pacman -S git openssh feh zip unzip
+        sudo pacman -S ttf-font-awesome ttf-dejavu powerline
+        sudo pacman -S keepassxc
+        sudo pacman -S fzf fasd
+    silent: true
+

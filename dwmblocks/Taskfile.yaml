@@ -14,7 +14,7 @@ tasks:
   make:
     cmds:
       - |
-        cd _dwm
+        cd _dwmblocks
         sudo make install
     silent: true
 
