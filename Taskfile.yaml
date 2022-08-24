@@ -18,5 +18,7 @@ tasks:
         sudo pacman -S ttf-font-awesome ttf-dejavu powerline
         sudo pacman -S keepassxc
         sudo pacman -S fzf fasd
+        sudo pacman -S zsh tmux
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     silent: true
 

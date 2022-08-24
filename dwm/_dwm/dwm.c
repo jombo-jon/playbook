@@ -1458,8 +1458,8 @@ run(void)
     execl("pkill","dwmbar",NULL);
 }
 void runAutostart(void) {
-    system("$XDG_CONFIG_HOME/.dwm/autostart_blocking.sh");
-    system("$XDG_CONFIG_HOME/.dwm/autostart.sh &");
+	    system("$XDG_CONFIG_HOME/dwm/autostart_blocking.sh");
+    system("$XDG_CONFIG_HOME/dwm/autostart.sh &");
 }
 void
 scan(void)
