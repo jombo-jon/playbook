@@ -11,13 +11,6 @@ tasks:
       - echo "{{.GREETING}} dwm"
     silent: true
   
-  make:
-    cmds:
-      - |
-        cd _dwm
-        sudo make install
-    silent: true
-
   stow:
     cmds:
       - stow --target=$HOME .

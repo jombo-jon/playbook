@@ -14,7 +14,7 @@ tasks:
   make:
     cmds:
       - |
-        cd _dwm
+        cd _st
         sudo make install
     silent: true
 

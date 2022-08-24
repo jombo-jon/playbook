@@ -24,6 +24,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/hej/.oh-my-zsh"
 export PATH=$PATH”:$HOME/bin
+export XDG_CONFIG_HOME=$HOME/.config
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -96,11 +97,11 @@ SOLARIZED_THEME="dark"
 #   prompt_segment black default "${emojis[$RAND_EMOJI_N]} "
 # }
 prompt_context() {
-  emojis=("⚡️" "🔥" "💀" "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🇹🇭" "🚦" "🌙")
-  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-    # prompt_segment black default "${emojis[4]}"
-  fi
+#  emojis=("⚡️" "🔥" "💀" "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🇹🇭" "🚦" "🌙")
+#  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+#    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+#    # prompt_segment black default "${emojis[4]}"
+#  fi
 }
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
