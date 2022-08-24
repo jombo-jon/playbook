@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}} dwm"
+    silent: true
+  
+  make:
+    cmds:
+      - |
+        cd _dwm
+        sudo make install
+    silent: true
+
+  stow:
+    cmds:
+      - stow --target=$HOME .
+    silent: true
+
+  unstow:
+    cmds:
+        - stow -D --target=$HOME .
+    silent: true

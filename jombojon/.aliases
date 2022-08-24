@@ -1,0 +1,39 @@
+# Vim remap to nvi
+alias vim='nvim'
+alias nv='nvim'
+alias vi='nvim'
+
+alias python='python3'
+alias adj='sudo apt-get update -y && sudo apt-get upgrade -y'
+alias jdev="cd /mnt/c/00_Local/DevOps/"
+alias explo="cmd.exe /C explorer ."
+
+# Switch Directories
+alias ..='cd ..'
+alias cd..='cd ..'
+
+# Common
+alias bat='batcat'
+alias cls='clear'
+alias cc='clear'
+alias la='ls -la'
+
+# Projet 
+
+
+# Task (Rust)
+alias week='rweek -w | xargs nvim'
+alias nweek='rweek -n | xargs nvim'
+alias pweek='rweek -p | xargs nvim'
+alias numweek='rweek --number $1 | xargs nvim'
+
+# fuzzyfinder for Terminal
+alias fcd='cd "$(find -type d | fzf)"'
+alias fvf='nvim "$(find -type f | fzf)"'
+alias fnn='nnn "$(find -type d | fzf)"'
+
+# Copy/paste
+alias cin="xclip -selection c"
+alias cout="xclip -selection clipboard -o"
+
+alias fcp="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c"
