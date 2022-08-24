@@ -6,10 +6,6 @@ vars:
   GREETING: Hello, World!
 
 tasks:
-  default:
-    cmds:
-      - echo "{{.GREETING}} dwm"
-    silent: true
   
   stow:
     cmds:
