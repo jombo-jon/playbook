@@ -1,2 +1,2 @@
-require("jombo-jon")
+require("jombojon")
 

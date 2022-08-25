@@ -10,7 +10,7 @@
 #~/.dropbox-dist/dropboxd &
 
 # Wallpaper
-feh --bg-fill --no-fehgb --randomize  $XDG_CONFIG_HOME/X11/wallpapers &
+feh --bg-fill --no-fehgb --randomize  $XDG_CONFIG_HOME/X11/wallpapers/* &
 
 # source ~/.dotfiles/nnn/nnn_profile.sh
 

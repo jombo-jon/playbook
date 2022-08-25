@@ -18,8 +18,9 @@ alias cls='clear'
 alias cc='clear'
 alias la='ls -la'
 
-# Projet 
-
+# Fasd
+alias j='fasd_cd -d'
+alias v='f -e nvim'
 
 # Task (Rust)
 alias week='rweek -w | xargs nvim'

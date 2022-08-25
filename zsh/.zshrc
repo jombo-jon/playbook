@@ -149,3 +149,5 @@ source $ZSH/oh-my-zsh.sh
 # GHDL and OSVVM
 alias gsim='rlwrap tclsh'
 
+# fasd init for the shell
+eval "$(fasd --init auto)"
