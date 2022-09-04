@@ -5,12 +5,17 @@ alias vi='nvim'
 
 alias python='python3'
 alias adj='sudo apt-get update -y && sudo apt-get upgrade -y'
-alias jdev="cd /mnt/c/00_Local/DevOps/"
-alias explo="cmd.exe /C explorer ."
+
+# Old config
+# alias jdev="cd /mnt/c/00_Local/DevOps/"
+# alias explo="cmd.exe /C explorer ."
 
 # Switch Directories
 alias ..='cd ..'
 alias cd..='cd ..'
+alias cdr='cd $HOME_REPO'
+alias cdm='cd $HOME_ME'
+alias cdp='cd $HOME_PROJECT'
 
 # Common
 alias bat='batcat'
@@ -23,10 +28,10 @@ alias j='fasd_cd -d'
 alias v='f -e nvim'
 
 # Task (Rust)
-alias week='rweek -w | xargs nvim'
-alias nweek='rweek -n | xargs nvim'
-alias pweek='rweek -p | xargs nvim'
-alias numweek='rweek --number $1 | xargs nvim'
+# alias week='rweek -w | xargs nvim'
+# alias nweek='rweek -n | xargs nvim'
+# alias pweek='rweek -p | xargs nvim'
+# alias numweek='rweek --number $1 | xargs nvim'
 
 # fuzzyfinder for Terminal
 alias fcd='cd "$(find -type d | fzf)"'

@@ -26,6 +26,10 @@ export ZSH="/home/hej/.oh-my-zsh"
 export PATH=$PATH”:$HOME/bin
 export XDG_CONFIG_HOME=$HOME/.config
 
+export HOME_REPO=$HOME/repo
+export HOME_ME=$HOME/perso
+export HOME_PROJECT=$HOME/projects
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME

@@ -11,6 +11,31 @@ tasks:
       - echo "{{.GREETING}}"
     silent: true
   
+  install_ubuntu:
+    cmds:
+      - echo "Installation for Ubuntu (using Taskdev file)"
+      - sudo apt install -y git openssh feh zip unzip
+      - sudo apt install -y ttf-font-awesome ttf-dejavu powerline
+      - sudo apt install -y keepassxc
+      - sudo apt install -y fzf fasd
+      - sudo apt install -y zsh tmux
+      - sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      - |
+        cd $HOME/personal
+
+        # git clone https://github.com/jombo-jon/playbook.git
+        # yip file
+        cd playbook
+
+
+    silent: false
+
+  install_arch:
+    cmds:
+      - |
+        echo "Installation for Arch (using Taskdev file)"
+    silent: true
+
   make:
     cmds:
       - |

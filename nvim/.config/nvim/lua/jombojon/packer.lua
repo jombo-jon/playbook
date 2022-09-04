@@ -7,9 +7,15 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+
     -- Nvim Tree
-    use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+        }
+    }
+    -- use 'kyazdani42/nvim-web-devicons'
  
     -- Telescope
     use("nvim-lua/plenary.nvim")
@@ -18,6 +24,9 @@ return require('packer').startup(function(use)
     use("nvim-treesitter/nvim-treesitter", {
           run = ":TSUpdate"
       })
+
+    -- Harpoon
+    use("ThePrimeagen/harpoon")
 
     -- Common Tool for neovim
     use("tpope/vim-commentary")
