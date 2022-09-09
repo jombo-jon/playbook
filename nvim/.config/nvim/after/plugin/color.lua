@@ -1,3 +1,8 @@
+-- local status_ok, color_installer = pcall(require, "gruvbox-community/gruvbox")
+-- if not status_ok then
+--     return
+-- end
+
 vim.g.gruvbox_material_background = "medium" -- hard, soft, medium
 vim.g.gruvbox_material_palette = "original" -- original, mix, material
 vim.g.gruvbox_material_enable_italic = 1

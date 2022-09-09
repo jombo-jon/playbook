@@ -21,7 +21,7 @@ read -p "Type your OS Name:" OS
   
 case $OS in  
     Ubuntu|ubuntu|Pop!Os|popos)  
-        task-go install_ubuntu
+        task install_ubuntu
         ;;  
     Arch|ArchLinux)  
         task-go install_arch
