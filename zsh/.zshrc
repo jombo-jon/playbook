@@ -22,7 +22,7 @@
 #esac
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/hej/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH”:$HOME/bin
 export XDG_CONFIG_HOME=$HOME/.config
 
