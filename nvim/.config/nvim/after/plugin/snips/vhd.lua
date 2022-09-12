@@ -43,19 +43,27 @@ end
 
 -- ------------ SNIPPETS --------------
 ls.add_snippets("vhdl", {
-
-  -- s(
-  --   "jkl" , 
-  --     { t{"voila","voila2"},
-  --       d(1,function(idx)
-  --         print(type(idx[1]))
-  --         local fname = idx[1] .. string.rep(".",5)
-  --         return sn(nil,i(1,fname))
-  --     end),
-  --     i(2) 
-  --   }
-  -- ),
-  -- local {default} require('default')
+  s(
+    "cst" , 
+    fmt([[constant C_{}{} : {} := {};]],{ 
+      i(1, "CST_NAME"),
+      f(function(name)
+        local fname = string.rep(" ",10 - #name[1])
+        return fname
+      end, {1}),
+      c(2, {
+        i(1, "CstType"),
+        t("time"),
+        t("std_logic"),
+        fmt([[ std_logic_vector({}{}{})]], {
+          i(1,"MAX"),
+          c(2, {t(' downto '),t(' upto ')}),
+          i(3,"0")
+        }),
+      }),
+      i(3,"DefaultValue"),
+    })
+  ), 
   s(
     "out" , 
     fmt([[{}{} : out {}{}]],{ 
@@ -64,15 +72,6 @@ ls.add_snippets("vhdl", {
         local fname = "_o" .. string.rep(" ",10 - #name[1])
         return fname
       end, {1}),
-      -- f(function(_,snip)
-      --   -- local fname = snip.captures[1] .. string.rep(" ",20 - #snip.captures[1])
-      --   local fname = snip.captures[1] .. "voilalalala"
-      --   return t(fname)
-      --   end, {1}),
-      -- d(1, function(idx)
-      --   local fname = idx[1] .. string(" ",20 - #idx[1])
-      --   return sn(nil, {i(1, fname)})
-      --   end,
       c(2, {
         t("std_logic"),
         fmt([[ std_logic_vector({}{}{})]], {
@@ -120,11 +119,11 @@ ls.add_snippets("vhdl", {
   ), 
   s(
     "sig" , 
-    fmt([[signal {}{} : {}{}]],{ 
+    fmt([[signal s_{}{} : {}{}]],{ 
       i(1, "SigName"),
       f(function(name)
         print(#name[1][1])
-        local fname = "_s" .. string.rep(" ",15 - #name[1][1])
+        local fname = string.rep(" ",15 - #name[1][1])
         return fname
       end, {1}),
       c(2, {

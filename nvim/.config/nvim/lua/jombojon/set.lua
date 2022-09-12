@@ -17,6 +17,9 @@ vim.opt.termguicolors = true
 
 vim.g.mapleader =","
 
+-- i sometimes use the mouse to scroll through a buffer
+vim.cmd [[set mouse=a]]
+
 -- vim.opt.listchars = {eol = '↵', tab = '▸\\'}   
 -- vim.opt.list = true
 vim.opt.list = true

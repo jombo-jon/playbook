@@ -8,7 +8,7 @@ alias adj='sudo apt-get update -y && sudo apt-get upgrade -y'
 
 # Old config
 # alias jdev="cd /mnt/c/00_Local/DevOps/"
-# alias explo="cmd.exe /C explorer ."
+alias explo="explorer.exe ."
 
 # Switch Directories
 alias ..='cd ..'

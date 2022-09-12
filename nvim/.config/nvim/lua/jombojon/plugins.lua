@@ -74,7 +74,15 @@ packer.startup(function(use)
   use("hrsh7th/cmp-nvim-lsp")
   use("saadparwaiz1/cmp_luasnip")
   
-   use( 'onsails/lspkind-nvim')
+  use( 'onsails/lspkind-nvim')
+
+  -- Hop
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2', -- optional but strongly recommended
+    config = function()
+    end
+  }
 
   -- Mason -- NEW LSP Installaler
   use {

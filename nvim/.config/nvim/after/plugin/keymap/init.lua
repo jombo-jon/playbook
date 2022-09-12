@@ -2,6 +2,10 @@ local nnoremap = require("jombojon.keymap").nnoremap
 local inoremap = require("jombojon.keymap").inoremap
 local vnoremap = require("jombojon.keymap").vnoremap
 
+-- Remove Zoom
+vim.keymap.set("","<C-->","<Nop>")
+vim.keymap.set("","<C-+>","<Nop>")
+
 -- Naviguation
 nnoremap("<c-j>","<C-W>j")
 nnoremap("<c-k>","<C-W>k")
@@ -11,6 +15,9 @@ nnoremap("<c-l>","<C-W>l")
 -- Copy / Paste
 nnoremap("<leader>y","\"+y")
 vnoremap("<leader>y","\"+y")
+
+nnoremap("<leader>p","\"+p")
+vnoremap("<leader>p","\"+p")
 
 -- Tab / Explorer / Nerdtree
 -- nnoremap("<leader>e","<cmd>Ex<CR>")
@@ -63,3 +70,4 @@ nnoremap ("<c-right>",":vertical resize +5<CR>")
 -- nnoremap("<leader>sn"," ]s")
 -- nnoremap("<leader>sp"," [s")
 -- zg to add word to dictionnary
+
