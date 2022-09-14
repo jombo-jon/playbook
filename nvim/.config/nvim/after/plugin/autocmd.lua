@@ -45,7 +45,7 @@ function nvim_create_augroups(definitions)
     vim.api.nvim_command('autocmd!')
     for _, def in ipairs(definition) do
       -- print(vim.inspect(def))
-      print(vim.inspect(def[2]))
+      -- print(vim.inspect(def[2]))
 
       -- 
       -- local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
@@ -57,7 +57,16 @@ function nvim_create_augroups(definitions)
   end
 end
 
+function lines_from(file)
+  local lines = {}
+  for line in io.lines(file) do 
+    lines[#lines + 1] = line
+  end
+  return lines
+end
 
+--  TODO : iteration over lines retrieve the fields and ask if missing no every field, ask project from list and
+--  automatique paste in fields
 function render()
   local default = true
   local data = {
@@ -71,8 +80,30 @@ function render()
       if string.match(data.file,pat) then
         default = false
         local buf = vim.api.nvim_get_current_buf()
-        -- vim.api.nvim_out_write("-- New File --\n")
-        vim.api.nvim_buf_set_lines(buf,0,-1,strict_indexing,{"--New File --", "-- M"})
+        local lines = lines_from(def[2])
+        local answer = nil 
+        -- Iterate over the lines and search for {%g+}
+        for _,line in pairs(lines) do
+          i, j = string.find(line, "{[%g%s]+}")
+          if i and j then
+            txt = "Enter " .. string.sub(line,i+1,j-1) .. ": "
+            answer = nil 
+            vim.ui.input(
+              { prompt = txt },
+              function(input) answer = input end
+            )
+            if answer ~= nil then
+              s = string.gsub(line,"{[%g%s]+}",answer)
+              vim.api.nvim_buf_set_lines(buf,-1,-1,strict_indexing,{s})
+            end
+          else
+            vim.api.nvim_buf_set_lines(buf,-1,-1,strict_indexing,{line})
+          end
+        end
+
+        -- print(pr)
+        -- vim.api.nvim_buf_set_lines(buf,0,-1,strict_indexing,lines)
+
         break
       end
     end
