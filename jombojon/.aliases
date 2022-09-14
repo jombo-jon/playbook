@@ -17,6 +17,8 @@ alias cdr='cd $HOME_REPO'
 alias cdm='cd $HOME_ME'
 alias cdp='cd $HOME_PROJECT'
 
+alias todo='notes -t'
+
 # Common
 alias bat='batcat'
 alias cls='clear'

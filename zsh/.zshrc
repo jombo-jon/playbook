@@ -30,6 +30,8 @@ export HOME_REPO=$HOME/repo
 export HOME_ME=$HOME/perso
 export HOME_PROJECT=$HOME/projects
 
+export HOMENOTES=/mnt/c/Users/johe/Dropbox/JonathanHendriks/01_Work/Zuhlke/notes
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -97,16 +99,15 @@ SOLARIZED_THEME="dark"
 # prompt_context() {
 #   # Custom (Random emoji)
 #   emojis=("⚡️" "🔥" "💀" "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🇹🇭" "🚦" "🌙")
-#   RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))
 #   prompt_segment black default "${emojis[$RAND_EMOJI_N]} "
 # }
-prompt_context() {
+# prompt_context() {
 #  emojis=("⚡️" "🔥" "💀" "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "🚀" "💡" "🎉" "🔑" "🇹🇭" "🚦" "🌙")
 #  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
 #    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
-#    # prompt_segment black default "${emojis[4]}"
+    # prompt_segment black default "${emojis[4]}"
 #  fi
-}
+#}
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -155,3 +156,6 @@ alias gsim='rlwrap tclsh'
 
 # fasd init for the shell
 eval "$(fasd --init auto)"
+
+# Empty Computer name 
+prompt_context(){}
