@@ -1,59 +1,30 @@
--- autocommands
--- https://dev.to/voyeg3r/writing-useful-lua-functions-to-my-neovim-14ki
 
--- ------- Description -------
--- Autocmd for filetype specific and then trigger and if else function inside to set according to what kind of type we
--- want to build ex: pkg.vhd or simple.vhd file
 
--- function file_exists()
+local ft = {"*.vhd","*.vhdl","*.md","*.py"}
 
---   local name = url:match("")
-
---   local f = io.open(
--- end
--- local au = require('au')
-
--- vim.nvimapi.nvim_create_autocmd( "BufNewFile",
---   {pattern = {"vhdl"}, callback = function()
---       print("VHDL FILEType")
---     end
---   }
--- )
-local ft = {"*.vhd","*.vhdl","todo.md"}
-
-local autocmds = {
-  VhdlGrp = {
-    -- Reload vim config automatically
-    -- {"BufNewFile","*pkg.vhd", "0r /home/johe/.config/nvim/template/package.vhd"};
-    {"BufNewFile","*.vhd", "0r /home/johe/.config/nvim/template/template.vhd"};
-    {"BufNewFile","*.vhdl", "0r /home/johe/.config/nvim/template/template.vhd"};
-  };
-}
 
 local templates = {
-  VHDL = {
-    -- Reload vim config automatically
-    {"pkg.vhd", "/home/johe/.config/nvim/template/package.vhd"};
-    {".vhd", "/home/johe/.config/nvim/template/template.vhd"};
-    {".vhdl", "/home/johe/.config/nvim/template/template.vhd"};
+  vhdl = {
+    {"Package", "/home/johe/.config/nvim/template/package.vhd"},
+    {"default.vhd", "/home/johe/.config/nvim/template/template.vhd"},
+    {".vhdl", "/home/johe/.config/nvim/template/template.vhd"},
   };
+  markdown ={
+    {"todo.md", "/home/johe/.config/nvim/template/todo.md"},
+    {"notebook.md", "/home/johe/.config/nvim/template/template.md"},
+    {"qa.md", "/home/johe/.config/nvim/template/qa.md"},
+    {"meeting.md", "/home/johe/.config/nvim/template/meeting.md"},
+    {"default.md", "/home/johe/.config/nvim/template/template.md"},
+  };
+  python = {
+    {"default.py", "/home/johe/.config/nvim/template/template.py"},
+  }
 }
 
-function nvim_create_augroups(definitions)
-  for group_name, definition in pairs(definitions) do
-    vim.api.nvim_command('augroup '..group_name)
-    vim.api.nvim_command('autocmd!')
-    for _, def in ipairs(definition) do
-      -- print(vim.inspect(def))
-      -- print(vim.inspect(def[2]))
-
-      -- 
-      -- local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
-      -- vim.api.nvim_command(command)
-      -- vim.api.nvim_create_autocmd( def[1], {pattern = def[2], command = def[3]})
-      vim.api.nvim_create_autocmd( def[1], {pattern = def[2], callback = render })
-    end
-    vim.api.nvim_command('augroup END')
+function nvim_create_autocmd(definitions)
+  for k, v in ipairs(definitions) do
+    print(v)
+    vim.api.nvim_create_autocmd( "BufNewFile", {pattern = v, callback = render })
   end
 end
 
@@ -65,57 +36,108 @@ function lines_from(file)
   return lines
 end
 
---  TODO : iteration over lines retrieve the fields and ask if missing no every field, ask project from list and
---  automatique paste in fields
+
+function pattern_from(lines)
+  local pat = {}
+
+  for _,line in pairs(lines) do
+    i, j = string.find(line, "{[%g%s]+}")
+    if i and j then
+      p = string.sub(line,i,j)
+
+      if p == "{User}" then
+        pat[p] = os.getenv("USER")
+      elseif p == "{Date}" then
+        pat[p] = os.date ("%A, %m %B %Y (%H:%M)")
+      elseif p == "{File}" then
+        pat[p] = vim.fn.expand("<afile>")
+      elseif not pat[p] then 
+        pat[p] = ''
+      end
+    end
+  end
+
+  return pat
+end
+
+
+local function get_keys(t)
+  local keys={}
+  for _, def in ipairs(t) do
+    table.insert(keys, def[1])
+  end
+  return keys
+end
+
+
 function render()
   local default = true
   local data = {
     file = vim.fn.expand("<afile>"),
+    match = vim.fn.expand("<amatch>"),
   }
+
   for group_name, definition in pairs(templates) do
 
-    for _, def in ipairs(definition) do
-      local pat = "%g+"..def[1]
-      print(data.file.. " --- " .. pat)
-      if string.match(data.file,pat) then
-        default = false
-        local buf = vim.api.nvim_get_current_buf()
-        local lines = lines_from(def[2])
-        local answer = nil 
-        -- Iterate over the lines and search for {%g+}
-        for _,line in pairs(lines) do
-          i, j = string.find(line, "{[%g%s]+}")
-          if i and j then
-            txt = "Enter " .. string.sub(line,i+1,j-1) .. ": "
-            answer = nil 
-            vim.ui.input(
-              { prompt = txt },
-              function(input) answer = input end
-            )
-            if answer ~= nil then
-              s = string.gsub(line,"{[%g%s]+}",answer)
-              vim.api.nvim_buf_set_lines(buf,-1,-1,strict_indexing,{s})
-            end
+    if group_name == vim.o.filetype then
+      -- Select A template ?
+      local selection  = nil
+      vim.ui.select(get_keys(definition),
+        {prompt = "Select a template :"},
+        function(input) selection = input end
+      )
+
+      -- Retrieve the template from all the def
+      local file = nil
+      for _, def in ipairs(definition) do
+        if selection == def[1] then
+          file = def[2]
+          break
+        end
+      end
+      print("File: " ..file)
+
+      local buf = vim.api.nvim_get_current_buf()
+      local lines = lines_from(file)
+
+      -- Iterate over the lines and search for {%g+}
+      local patterns = pattern_from(lines)
+
+      -- Query User for Information
+      for k,v in pairs(patterns) do
+        if v == '' then
+          txt = "Enter " .. k .. ": "
+          vim.ui.input(
+            { prompt = txt},
+            function(input) patterns[k] = input or '' end
+          )
+        end
+      end
+
+      -- Populate File with Information
+      for p,v in pairs(patterns) do
+        for i,line in pairs(lines) do
+          if string.match(line,p) then
+            s = string.gsub(line,p,v)
+            lines[i] = s
           else
-            vim.api.nvim_buf_set_lines(buf,-1,-1,strict_indexing,{line})
           end
         end
-
-        -- print(pr)
-        -- vim.api.nvim_buf_set_lines(buf,0,-1,strict_indexing,lines)
-
-        break
       end
+      
+      vim.api.nvim_buf_set_lines(buf,-1,-1,strict_indexing,lines)
+
+      -- Template Found so break out!
+      default = false
+      break
     end
+
   end
 
   if default then
     print("Default")
   end
 
-
 end
 
--- vim.api.nvim_create_autocmd( "BufNewFile", {pattern = ".vhd", callback = render })
-nvim_create_augroups(autocmds)
--- autocommands END
+nvim_create_autocmd(ft)

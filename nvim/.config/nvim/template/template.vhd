@@ -1,12 +1,12 @@
 -------------------------------------------------------------------------------
--- Project name      : 
--- Project number    :
--- Customer          : 
+-- Project name      : {Project Name}
+-- Project number    : {Project Number}
+-- Customer          : {Customer} 
 --
 -- Used Primitives   : 
 --
 -------------------------------------------------------------------------------
 -- Description : 
--- 
+-- {Description} 
 -------------------------------------------------------------------------------
 

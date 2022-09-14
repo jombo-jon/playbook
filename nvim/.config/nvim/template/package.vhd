@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- Project name      : {Project Name}
 -- Project number    : {Project Number}
--- Customer          : {CUstomer} 
+-- Customer          : {Customer} 
 --
 -- Used Primitives   : 
 --
@@ -9,10 +9,10 @@
 -- Description : 
 -- 
 -------------------------------------------------------------------------------
-package FunctionPkg is
+package {Package Name} is
 
-end FunctionPkg;
+  end {Package Name};
 
-package body FunctionPkg is
+package body {Package Name} is
 
-end FunctionPkg;
+  end {Package Name};
