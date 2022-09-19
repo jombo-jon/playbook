@@ -26,12 +26,14 @@ export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH”:$HOME/bin
 export XDG_CONFIG_HOME=$HOME/.config
 
-export HOME_REPO=$HOME/repo
-export HOME_ME=$HOME/perso
-export HOME_PROJECT=$HOME/projects
+export WHOME=/mnt/c/Users/johe
+export HOME_REPO=$WHOME/repo
+export HOME_ME=$WHOME/perso
+export HOME_PROJECT=$WHOME/projects
 
-export HOMENOTES=/mnt/c/Users/johe/Dropbox/JonathanHendriks/01_Work/Zuhlke/notes
+export HOMENOTES=$WHOME/Dropbox/JonathanHendriks/01_Work/Zuhlke/notes
 
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
