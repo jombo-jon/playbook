@@ -23,7 +23,7 @@ local templates = {
 
 function nvim_create_autocmd(definitions)
   for k, v in ipairs(definitions) do
-    print(v)
+    -- print(v)
     vim.api.nvim_create_autocmd( "BufNewFile", {pattern = v, callback = render })
   end
 end

@@ -13,16 +13,24 @@ nnoremap("<c-h>","<C-W>h")
 nnoremap("<c-l>","<C-W>l")
 
 -- Copy / Paste
-nnoremap("<leader>y","\"+y")
+nnoremap("<leader>Y","viw\"+y")
+vnoremap("<leader>Y","viw\"+y")
 vnoremap("<leader>y","\"+y")
+nnoremap("<leader>y","\"+y")
 
 nnoremap("<leader>p","\"+p")
 vnoremap("<leader>p","\"+p")
+-- vnoremap("<leader>p","\"+dP")
+nnoremap("<leader>P","\"_dP")
+vnoremap("<leader>P","\"_dP")
 
 -- Tab / Explorer / Nerdtree
 -- nnoremap("<leader>e","<cmd>Ex<CR>")
-nnoremap("<leader>e" ,":NvimTreeOpen<CR>")
-nnoremap("<leader>t" ,":NvimTreeToggle<CR>")
+-- nnoremap("<leader>e" ,":NvimTreeOpen<CR>")
+nnoremap("<leader>e" ,":Explore<CR>")
+nnoremap("<leader>se" ,":Sexplore<CR>")
+nnoremap("<leader>ve" ,":Vexplore<CR>")
+
 nnoremap("<leader>tn",":tabnew<CR>")
 nnoremap("<leader>te",":tabedit %<CR>")
 

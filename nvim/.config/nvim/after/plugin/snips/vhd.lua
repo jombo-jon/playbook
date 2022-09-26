@@ -37,213 +37,241 @@ local paddtext = function(position)
 end
 
 local has_value = function(value)
-  print(value)
-    if value == "oth" then
-      return ":= (others => '0');"
-    elseif value == "0th" then
-      return ":= (others => '0');"
-    elseif value == "1th" then
-      return ":= (others => '1');"
-    elseif value == " " then
-      return ";"
-    elseif value ~= nil then
-      return ":= " .. value .. ";"
-    else
-      return ";"
-    end
+  print("Value: "..value)
+  if value == "oth" then
+    return ":= (others => '0');"
+  elseif value == "0th" then
+    return ":= (others => '0');"
+  elseif value == "1th" then
+    return ":= (others => '1');"
+  elseif value == "" then
+    return ";"
+  elseif value == " " then
+    return ";"
+  elseif value ~= nil then
+    return ":= " .. value .. ";"
+  else
+    return ";"
+  end
 end 
+
+
 -- ------------ SNIPPETS --------------
 ls.add_snippets("vhdl", {
-  s(
-    "cst" , 
-    fmt([[constant C_{}{} : {} := {};]],{ 
-      i(1, "CST_NAME"),
-      f(function(name)
-        local fname = string.rep(" ",10 - #name[1])
-        return fname
-      end, {1}),
-      c(2, {
-        i(1, "CstType"),
-        t("time"),
-        t("std_logic"),
-        fmt([[ std_logic_vector({}{}{})]], {
-          i(1,"MAX"),
-          c(2, {t(' downto '),t(' upto ')}),
-          i(3,"0")
-        }),
-      }),
-      i(3,"DefaultValue"),
-    })
-  ), 
+
+  s({trig = "vhdl (.+)", regTrig = true}, 
+  fmt([[
+entity {} is 
+  generic(
+    {} 
+         ); 
+  port(
+
+      );
+end {};
+
+
+architecture behavior of {} is
+
+begin
+
+end behavior;
+]],{ 
+    d(1,function(args, snip) 
+      return sn(1, t(snip.captures[1]))
+    end),
+    i(0),
+    rep(1),
+    rep(1),
+  })
+  ),
+  s({trig = "pro", regTrig = true}, 
+  fmt([[
+  process ({}) 
+  begin
+  end process;
+]],{ 
+    i(0),
+  })
+  ),
+
+  -- Conditions 
+  -- ------------------------------------
+  s({trig = "if", regTrig = true}, 
+  fmt([[
+if {} then
+end if;
+]],{ 
+    i(0),
+  })
+  ),
+  s({trig = "ife", regTrig = true}, 
+  fmt([[
+if {} then
+else
+end if;
+]],{ 
+    i(0),
+  })
+  ),
+  s({trig = "elif", regTrig = true}, 
+  fmt([[
+elsif {} then
+]],{ 
+    i(0),
+  })
+  ),
+  
+  s({trig = "case ([%a%d_-]+)", regTrig = true}, 
+  fmt([[case {} is
+  {}
+  when others =>
+
+end case;]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    i(0)
+  })
+  ),
+  s({trig = "wh", regTrig = true}, 
+  fmt([[when {} =>]],{ 
+    i(0),
+  })
+  ),
+  -- Variables,
+  -- ------------------------------------
   -- C_{UPPER} : 
-  s({trig = "cst (%w+)", regTrig = true}, 
-    fmt([[{}{}]],{ 
-  	  d(1,function(args, snip) 
-        local line = "constant C_" .. string.upper(snip.captures[1]) .. string.rep(" ",10 - #snip.captures[1]) .. ": "
-        return sn(1, t(line))
-  		end),
-      i(2),
-    })
+  s({trig = "cst (.+)", regTrig = true}, 
+  fmt([[{}{}]],{ 
+    d(1,function(args, snip) 
+      local line = "constant C_" .. string.upper(snip.captures[1]) .. string.rep(" ",10 - #snip.captures[1]) .. ": "
+      return sn(1, t(line))
+    end),
+    i(0),
+  })
   ),
   -- Math Type
-  s({trig = "real (%w+)", regTrig = true}, 
-    fmt([[{}{}]],{ 
-  	  d(1,function(args, snip) 
-        local line = "real := " .. string.upper(snip.captures[1]) .. " ;"
-        return sn(1, t(line))
-  		end),
-      i(2),
-    })
-  ),
-  s({trig = "int (%w+)", regTrig = true}, 
-    fmt([[{}{}]],{ 
-  	  d(1,function(args, snip) 
-        local line = "integer := " .. string.upper(snip.captures[1]) .. " ;"
-        return sn(1, t(line))
-  		end),
-      i(2),
-    })
-  ),
-  -- s(
-  --   "out" , 
-  --   fmt([[{}{} : out {}{}]],{ 
-  --     i(1, "OutPort"),
-  --     f(function(name)
-  --       local fname = "_o" .. string.rep(" ",10 - #name[1])
-  --       return fname
-  --     end, {1}),
-  --     c(2, {
-  --       t("std_logic"),
-  --       fmt([[ std_logic_vector({}{}{})]], {
-  --         i(1,"MAX"),
-  --         c(2, {t(' downto '),t(' upto ')}),
-  --         i(3,"0")
-  --       }),
-  --     }),
-  --     c(3, {
-  --       t(""),
-  --       t(";"),
-  --     }),
-  --   })
-  -- ), 
-  -- s(
-  --   "in" , 
-  --   fmt([[{}{} : in {}{}]],{ 
-  --     i(1, "InPort"),
-  --     f(function(name)
-  --       local fname = "_i" .. string.rep(" ",10 - #name[1])
-  --       return fname
-  --     end, {1}),
-  --     -- f(function(_,snip)
-  --     --   -- local fname = snip.captures[1] .. string.rep(" ",20 - #snip.captures[1])
-  --     --   local fname = snip.captures[1] .. "voilalalala"
-  --     --   return t(fname)
-  --     --   end, {1}),
-  --     -- d(1, function(idx)
-  --     --   local fname = idx[1] .. string(" ",20 - #idx[1])
-  --     --   return sn(nil, {i(1, fname)})
-  --     --   end,
-  --     c(2, {
-  --       t("std_logic"),
-  --       fmt([[ std_logic_vector({}{}{})]], {
-  --         i(1,"MAX"),
-  --         c(2, {t(' downto '),t(' upto ')}),
-  --         i(3,"0")
-  --       }),
-  --     }),
-  --     c(3, {
-  --       t(""),
-  --       t(";"),
-  --     }),
-  --   })
-  -- ), 
-  -- {}_x : in
-  s({trig = "in (%w+)", regTrig = true}, 
-    fmt([[{}{}
+  s({trig = "real (.+)", regTrig = true}, 
+  fmt([[{}
 {}]],{ 
-  	  d(1,function(args, snip) 
-        local line = snip.captures[1].. "_i" .. string.rep(" ",10 - #snip.captures[1]) .. ": in  "
-        return sn(1, t(line))
-  		end),
-      i(2,"std_logic;"),
-      i(3)
-    })
+    d(1,function(args, snip) 
+      local line = "real := " .. string.upper(snip.captures[1]) .. " ;"
+      return sn(1, t(line))
+    end),
+    i(0),
+  })
   ),
-  -- {}_x : out
-  s({trig = "out (%w+)", regTrig = true}, 
-    fmt([[{}{}
+  s({trig = "int (.+)", regTrig = true}, 
+  fmt([[{}
 {}]],{ 
-  	  d(1,function(args, snip) 
-        local line = snip.captures[1].. "_0" .. string.rep(" ",10 - #snip.captures[1]) .. ": out "
-        return sn(1, t(line))
-  		end),
-      i(2,"std_logic;"),
-      i(3)
-    })
+    d(1,function(args, snip) 
+      local line = "integer := " .. string.upper(snip.captures[1]) .. " ;"
+      return sn(1, t(line))
+    end),
+    i(0),
+  })
   ),
+  s({trig = "i ([%a%d_-]+)", regTrig = true}, 
+    d(1,function(args, snip) 
+      local line = snip.captures[1].. "_i" .. string.rep(" ",10 - #snip.captures[1]) .. ": in   "
+      return sn(1, t(line))
+    end),
+    i(0)
+  ),
+  s({trig = "in ([%a%d_-]+)", regTrig = true}, 
+    d(1,function(args, snip) 
+      local line = snip.captures[1].. "_i" .. string.rep(" ",10 - #snip.captures[1]) .. ": in   "
+      return sn(1, t(line))
+    end),
+    i(0)
+  ),
+  s({trig = "o ([%a%d_-]+)", regTrig = true}, 
+    d(1,function(args, snip) 
+      local line = snip.captures[1].. "_o" .. string.rep(" ",10 - #snip.captures[1]) .. ": out  "
+      return sn(1, t(line))
+    end),
+    i(0)
+  ),
+  s({trig = "out ([%a%d_-]+)", regTrig = true}, 
+    d(1,function(args, snip) 
+      local line = snip.captures[1].. "_o" .. string.rep(" ",10 - #snip.captures[1]) .. ": out  "
+      return sn(1, t(line))
+    end),
+    i(0)
+  ),
+
   -- signal s_{} : {} :=
-  s({trig = "s (%w+)", regTrig = true}, 
-    fmt([[signal s_{} {}]],{ 
-  	  d(1,function(args, snip) 
-        local line = snip.captures[1] .. string.rep(" ",10 - #snip.captures[1]) .. ": "
-        return sn(1, t(line))
-  		end),
-      i(2),
-    })
+  s({trig = "s ([%a%d_-]+)", regTrig = true}, 
+  fmt([[signal s_{} {}]],{ 
+    d(1,function(args, snip) 
+      local line = snip.captures[1] .. string.rep(" ",10 - #snip.captures[1]) .. ": "
+      return sn(1, t(line))
+    end),
+    i(0),
+  })
   ),
   -- std_logic
   s({trig = "slz", regTrig = true}, 
-    fmt([[{}
-{}
-]],{ 
-  	  t("std_logic := '0'"),
-      i(2)
-    })
+    t("std_logic := '0';"), i(0)
   ),
-  s({trig = "sl(.*)", regTrig = true}, 
-    fmt([[{}
-{}
-]],{ 
-  	  d(1,function(_, snip) 
-        local val = has_value(snip.captures[1])
-        return sn(1, t("std_logic " .. val))
-  		end),
-      i(2)
-    })
+  s({trig = "sl", regTrig = true}, 
+    t("std_logic "), i(0)
   ),
-  -- std_logic_vector({} {} {})
-  s({trig = "svz (.+) (%d+)", regTrig = true}, 
-    fmt([[{}
-{}
-]],{ 
-  	  d(1,function(_, snip) 
-        return sn(1, t("std_logic_vector( " .. snip.captures[1] .. " downto " .. snip.captures[2] .." ) := (others => '0');"))
-  		end),
-      i(2)
-    })
+  s({trig = "svz", regTrig = true}, 
+  fmt([[std_logic_vector({}) := (others => '0');]],{ 
+    i(0)
+  })
   ),
-  -- s(
-  --   "ent" , 
-  --   fmt("\nentity {} is\n\t{}\n\t{}\nend {};\n", {
-  --       i(0) ,
-  --       c(1,{
-  --         fmt("\n\tGeneric (\n\t\t{}\t\n);", {
-  --           i(0) ,
-  --         }),
-  --         t(""),
-  --       }),
-  --       fmt("\n\tPort (\n\t\t{}\t\n);", {
-  --         i(0) ,
-  --       }),
-  --       rep(1),
-  --     })
-  -- ), 
-  -- s(
-  --   "port" , 
-  --   fmt("\n\tPort(\n\t\t{}\t\n);", {
-  --       i(0) ,
-  --   })
-  -- ), 
+  s({trig = "sv", regTrig = true}, 
+  fmt([[std_logic_vector({})]],{ 
+    i(0)
+  })
+  ),
+  -- Specific,
+  -- ------------------------------------
+  s({trig = "sz", regTrig = true}, 
+  fmt([[ <= '0';
+{}]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "so", regTrig = true}, 
+  fmt([[ <= '1';
+{}]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "ez", regTrig = true}, 
+  fmt([[ = '0'{}]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "eo", regTrig = true}, 
+  fmt([[ = '1'{}]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "iri", regTrig = true}, 
+  fmt([[
+if rising_edge({}) then
+end if;]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "ifa", regTrig = true}, 
+  fmt([[
+if falling_edge({}) then
+end if;]],{ 
+    i(0)
+  })
+  ),
+  s({trig = "++([%a%d_-]+)", regTrig = true}, 
+  fmt([[{} <= {} + 1;
+{}]],{ 
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    same(1),
+    i(0),
+  })
+  ),
 },
 {
   key = "vhdl",

@@ -13,14 +13,15 @@ vim.opt.commentstring = "-- %s"
 -- Naviguation
 inoremap("<<","<=")
 inoremap(">>","=>")
+inoremap("::",":=")
 
 -- Special Normal
 -- nnoremap("cmp","<cmd>:lua test()<cr>")
 
 -- Insert Mode
-inoremap("oth","(others => '0')")
-inoremap("stl","std_logic")
-inoremap("stv","std_logic_vector")
+-- inoremap("oth","(others => '0')")
+-- inoremap("stl","std_logic")
+-- inoremap("stv","std_logic_vector")
 
 -- vim.api.nvim_create_autocmd( "BufNewFile",
 --   {pattern = {"vhdl"}, callback = function()
