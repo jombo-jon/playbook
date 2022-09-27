@@ -97,7 +97,7 @@ packer.startup(function(use)
   -- use("williamboman/mason.nvim")
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
-  
+
 end)
 
 

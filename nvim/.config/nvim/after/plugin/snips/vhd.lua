@@ -55,19 +55,76 @@ local has_value = function(value)
   end
 end 
 
+local filename = function(_,snip) 
+      local file = snip.env.TM_FILENAME 
+      return file:match("(.*).vhd")
+end 
 
 -- ------------ SNIPPETS --------------
 ls.add_snippets("vhdl", {
 
-  s({trig = "vhdl (.+)", regTrig = true}, 
+  s({trig = "tb", regTrig = true}, 
   fmt([[
-entity {} is 
-  generic(
-    {} 
-         ); 
-  port(
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
 
-      );
+entity {} is 
+end {};
+
+architecture behavior of {} is
+  -- Components
+  {}
+
+  -- Constant for Clock Genertion
+  constant C_CLK_PERIOD : time := 1ns;
+
+  -- Signals
+  signal s_clk  : std_logic := '0';
+
+begin
+
+  -- Clock Generation
+  clkgen : process
+  begin 
+    s_clk <= '1';
+    wait for C_CLK_PERIOD/2;
+    s_clk <= '0';
+    wait for C_CLK_PERIOD/2;
+  end process;
+
+  -- Dut 
+  
+
+  -- ------------------
+  -- Core TestBench
+  -- ------------------
+  process
+  begin
+    wait;
+  end process;
+
+end behavior;
+]],{ 
+    f(filename,{}),
+    f(filename,{}),
+    f(filename,{}),
+    i(0)
+  })
+  ),
+  s({trig = "vhdl", regTrig = true}, 
+  fmt([[
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity {} is 
+  generic (
+    {}
+  );
+  port (
+
+  );
 end {};
 
 
@@ -77,12 +134,10 @@ begin
 
 end behavior;
 ]],{ 
-    d(1,function(args, snip) 
-      return sn(1, t(snip.captures[1]))
-    end),
+    f(filename,{}),
     i(0),
-    rep(1),
-    rep(1),
+    f(filename,{}),
+    f(filename,{}),
   })
   ),
   s({trig = "pro", regTrig = true}, 
@@ -269,6 +324,16 @@ end if;]],{
 {}]],{ 
     d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
     same(1),
+    i(0),
+  })
+  ),
+  s({trig = "s2i", regTrig = true}, 
+  fmt([[to_integer(unsigned({}))]],{ 
+    i(0),
+  })
+  ),
+  s({trig = "std2int", regTrig = true}, 
+  fmt([[to_integer(unsigned({}))]],{ 
     i(0),
   })
   ),
