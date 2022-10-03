@@ -98,6 +98,9 @@ packer.startup(function(use)
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
 
+  --JOMBO-JON Plugins
+  use("jombo-jon/vhdlkit")
+    
 end)
 
 

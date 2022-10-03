@@ -185,6 +185,11 @@ _G.packer_plugins = {
     path = "/home/johe/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  vhdlkit = {
+    loaded = true,
+    path = "/home/johe/.local/share/nvim/site/pack/packer/start/vhdlkit",
+    url = "https://github.com/jombo-jon/vhdlkit"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/home/johe/.local/share/nvim/site/pack/packer/start/vim-commentary",

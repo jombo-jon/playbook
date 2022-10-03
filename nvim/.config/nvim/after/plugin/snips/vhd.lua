@@ -62,7 +62,6 @@ end
 
 -- ------------ SNIPPETS --------------
 ls.add_snippets("vhdl", {
-
   s({trig = "tb", regTrig = true}, 
   fmt([[
 library ieee;
