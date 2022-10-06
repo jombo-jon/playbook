@@ -52,6 +52,7 @@ packer.startup(function(use)
   use("nvim-lua/plenary.nvim")
   use("nvim-lua/popup.nvim")
   use("nvim-telescope/telescope.nvim")
+  use { "nvim-telescope/telescope-file-browser.nvim" }
   use("nvim-treesitter/nvim-treesitter", {
         run = ":TSUpdate"
     })
@@ -95,7 +96,6 @@ packer.startup(function(use)
     run = 'bash install.sh'
   }
   -- use("williamboman/mason.nvim")
-  use { "nvim-telescope/telescope-file-browser.nvim" }
   use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
 
   --JOMBO-JON Plugins

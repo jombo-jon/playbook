@@ -139,6 +139,27 @@ end behavior;
     f(filename,{}),
   })
   ),
+  s({trig = "pkg", regTrig = true}, 
+  fmt([[
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+package {} is 
+{}
+end {};
+
+package body {} is
+
+end {};
+]],{ 
+    f(filename,{}),
+    i(0),
+    f(filename,{}),
+    f(filename,{}),
+    f(filename,{}),
+  })
+  ),
   s({trig = "pro", regTrig = true}, 
   fmt([[
   process ({}) 
@@ -175,7 +196,51 @@ elsif {} then
     i(0),
   })
   ),
-  
+  s({trig = "wfa ([%a%d_-]+)", regTrig = true}, 
+  fmt([[
+wait until {}'event and {} = '0';
+{}]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    rep(1),
+    i(0)
+  })
+  ),
+  s({trig = "wri ([%a%d_-]+)", regTrig = true}, 
+  fmt([[
+wait until {}'event and {} = '1';
+{}]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    rep(1),
+    i(0)
+  })
+  ),
+  s({trig = "wz ([%a%d_-]+)", regTrig = true}, 
+  fmt([[wait until {} = '0';
+{}]], {
+    d(1,function(_, snip) return sn(1, t(snip.captures[1])) end),
+    i(0)
+  })
+  ),
+  s({trig = "wo ([%a%d_-]+)", regTrig = true}, 
+  fmt([[wait until {} = '1';
+{}]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    i(0)
+  })
+  ),
+  s({trig = "wu ([%a%d_-]+)", regTrig = true}, 
+  fmt([[wait until {} {};]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    i(0)
+  })
+  ),
+  s({trig = "wf ([%a%d_-]+)", regTrig = true}, 
+  fmt([[wait for {};
+{}]], {
+    d(1,function(args, snip) return sn(1, t(snip.captures[1])) end),
+    i(0)
+  })
+  ),
   s({trig = "case ([%a%d_-]+)", regTrig = true}, 
   fmt([[case {} is
   {}
